@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+fastapi-utils = "*"
+uvicorn = "*"
+python-multipart = "*"
+openpyxl = "*"
+pandas = "*"
+pytest = "*"
+requests = "*"
+aiofiles = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+server = "uvicorn main:app --host 0.0.0.0 --port 80"
+tests = "py.test ./ -vv -s --disable-pytest-warnings"

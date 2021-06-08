@@ -1,0 +1,4 @@
+order_number,booked_at,marker,price,price_currency,profit,profit_currency,state
+AAAAAA,2021-01-01 00:00:00,abcabcabcabc,40000.0,KZT,532.0,KZT,paid
+BBBBBB,2021-01-02 00:00:00,bcdbcdbcdbcd,100000.0,KZT,1330.0,KZT,paid
+CCCCCC,2021-10-05 00:00:00,cdecdecdecde,5800.75,RUB,77.149975,RUB,paid
