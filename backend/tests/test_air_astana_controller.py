@@ -12,7 +12,7 @@ client = TestClient(app)
 
 
 def test_format_booking(formatted_booking):
-    workbook = pd.ExcelFile("tests/test_data/test_report.xlsx")
+    workbook = pd.ExcelFile("tests/test_data/air_astana/test_report.xlsx")
     dataframe = pd.read_excel(
         workbook, handler.config["sheet_name"], skiprows=handler.config["skip_rows"]
     )
@@ -41,7 +41,7 @@ def test_add_existing_booking_to_stats_admin_bookings(stats_admin_bookings, book
 
 def test_export_to_csv_file(stats_admin_bookings):
     handler.stats_admin_bookings = stats_admin_bookings
-    with open("tests/test_data/test_csv_file.csv") as example_file:
+    with open("tests/test_data/air_astana/test_csv_file.csv") as example_file:
         example_file_value = example_file.read()
         exported_file = handler.export_to_csv_file()
         exported_file_value = exported_file.getvalue()
@@ -72,10 +72,10 @@ def test_return_csv_file(stats_admin_bookings):
 
 def test_get_bookings_for_stats_admin():
     data = {"order_numbers": '["AAAAAA", "BBBBBB", "CCCCCC"]'}
-    file = {"file": open("tests/test_data/test_report.xlsx", "rb")}
+    file = {"file": open("tests/test_data/air_astana/test_report.xlsx", "rb")}
     response = client.post("/api/airastana/", data=data, files=file)
     assert response.status_code == 200
-    with open("tests/test_data/test_csv_file.csv") as example_file:
+    with open("tests/test_data/air_astana/test_csv_file.csv") as example_file:
         example_file_value = example_file.read()
         # removing the last character of response.text,
         # as it is a newline character
