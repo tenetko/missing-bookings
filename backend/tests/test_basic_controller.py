@@ -7,3 +7,5 @@ def test_get_config():
     config = handler.get_config(name)
     assert config["name"] == "test"
     assert config["profit"] == 0.02
+
+

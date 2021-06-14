@@ -1,5 +1,5 @@
 from controllers.air_astana import AirAstanaHandler
-from tests.fixtures import *
+from tests.fixtures.air_astana import *
 from fastapi import Response
 from fastapi.testclient import TestClient
 from main import app

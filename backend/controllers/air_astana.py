@@ -14,12 +14,6 @@ router = InferringRouter()
 class AirAstanaHandler(BasicHandler):
     NAME = "air_astana"
 
-    def __init__(self):
-        self.config_name = self.NAME
-        super().__init__()
-
-        self.stats_admin_bookings = {}
-
     @router.post("/")
     def get_bookings_for_stats_admin(
         self, order_numbers: str = Form(...), file: UploadFile = File(...)
