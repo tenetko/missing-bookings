@@ -1,16 +1,20 @@
 from pytest import fixture
 from typing import Dict
+from controllers.basic import BasicHandler
+
+handler = BasicHandler()
+config = handler.get_config("air_astana")
 
 
 @fixture
 def formatted_booking() -> Dict:
     return {
-        "pnr": "AAAAAA",
+        "order_number": "AAAAAA",
         "marker": "abcabcabcabc",
         "booked_at": "2021-01-01 00:00:00",
         "price": 40000,
         "price_currency": "KZT",
-        "profit": 40000 * 0.0133,
+        "profit": 40000 * config["profit"],
         "profit_currency": "KZT",
         "state": "paid",
     }

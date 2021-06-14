@@ -11,8 +11,8 @@ router = InferringRouter()
 
 
 @cbv(router)
-class AirAstanaHandler(BasicHandler):
-    NAME = "air_astana"
+class EskyHandler(BasicHandler):
+    NAME = "esky"
 
     @router.post("/")
     def get_bookings_for_stats_admin(
@@ -22,23 +22,24 @@ class AirAstanaHandler(BasicHandler):
         dataframe = pd.read_excel(
             workbook, self.config["sheet_name"], skiprows=self.config["skip_rows"]
         )
+
         for row in dataframe.itertuples():
-            order_number = str(row.PNR)
+            order_number = str(row.PackageNumber)
             if order_number in order_numbers:
                 booking = self.format_booking(row)
                 self.add_booking_to_stats_admin_bookings(booking)
 
-        filename = "stats-admin-air-astana.csv"
+        filename = "stats-admin-esky.csv"
         file = self.export_to_csv_file()
         return self.return_csv_file(file, filename)
 
     def format_booking(self, row: NamedTuple) -> Dict:
-        price = float(row[7])
+        price = float(str(row.BasketValue).replace(",", "."))
         profit = price * self.config["profit"]
         booking = {
-            "order_number": str(row.PNR),
-            "marker": row[5],
-            "booked_at": str(row[4]),  # mm-dd-YY in XLSX reports
+            "order_number": str(row.PackageNumber),
+            "marker": "",
+            "booked_at": str(row.Date),  # mm-dd-YY in XLSX reports
             "price": price,
             "price_currency": row.Currency,
             "profit": profit,

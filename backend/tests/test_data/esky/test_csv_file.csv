@@ -1,0 +1,4 @@
+order_number,booked_at,marker,price,price_currency,profit,profit_currency,state
+1234567890,2021-05-11 00:00:00,,150.0,AUD,3.75,AUD,paid
+9876543210,2021-05-13 00:00:00,,800.0,BRL,20.0,BRL,paid
+1122334455,2021-05-14 00:00:00,,178.0,USD,4.45,USD,paid

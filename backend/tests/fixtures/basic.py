@@ -5,7 +5,7 @@ from typing import Dict
 @fixture
 def booking() -> Dict:
     return {
-        "pnr": "AAAAAA",
+        "order_number": "AAAAAA",
         "marker": "abcabcabcabc",
         "booked_at": "2021-01-01 00:00:00",
         "price": 60000.00,
@@ -20,7 +20,7 @@ def booking() -> Dict:
 def stats_admin_bookings() -> Dict:
     return {
         "AAAAAA": {
-            "pnr": "AAAAAA",
+            "order_number": "AAAAAA",
             "marker": "abcabcabcabc",
             "booked_at": "2021-01-01 00:00:00",
             "price": 40000.00,
@@ -30,7 +30,7 @@ def stats_admin_bookings() -> Dict:
             "state": "paid",
         },
         "BBBBBB": {
-            "pnr": "BBBBBB",
+            "order_number": "BBBBBB",
             "marker": "bcdbcdbcdbcd",
             "booked_at": "2021-01-02 00:00:00",
             "price": 100000.00,
@@ -40,7 +40,7 @@ def stats_admin_bookings() -> Dict:
             "state": "paid",
         },
         "CCCCCC": {
-            "pnr": "CCCCCC",
+            "order_number": "CCCCCC",
             "marker": "cdecdecdecde",
             "booked_at": "2021-10-05 00:00:00",
             "price": 5800.75,

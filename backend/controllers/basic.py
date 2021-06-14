@@ -28,11 +28,11 @@ class BasicHandler:
         output.write(csv_header)
 
         bookings = self.stats_admin_bookings
-        for pnr in bookings:
-            booking = bookings[pnr]
+        for order_number in bookings:
+            booking = bookings[order_number]
             row = (
-                f"{pnr},{booking['booked_at']},{booking['marker']},{booking['price']},"
-                f"{booking['price_currency']},{booking['profit']},"
+                f"{order_number},{booking['booked_at']},{booking['marker']},"
+                f"{booking['price']},{booking['price_currency']},{booking['profit']},"
                 f"{booking['profit_currency']},{booking['state']}\n"
             )
             output.write(row)
@@ -59,14 +59,14 @@ class BasicHandler:
         raise NotImplementedError
 
     def add_booking_to_stats_admin_bookings(self, booking: Dict) -> None:
-        pnr = booking["pnr"]
-        if pnr not in self.stats_admin_bookings:
-            self.stats_admin_bookings[pnr] = booking
+        order_number = booking["order_number"]
+        if order_number not in self.stats_admin_bookings:
+            self.stats_admin_bookings[order_number] = booking
         else:
             price = booking["price"]
-            existing_record = self.stats_admin_bookings[pnr]
+            existing_record = self.stats_admin_bookings[order_number]
             new_price = existing_record["price"] + price
             new_profit = new_price * self.config["profit"]
             booking["price"] = new_price
             booking["profit"] = new_profit
-            self.stats_admin_bookings[pnr] = booking
+            self.stats_admin_bookings[order_number] = booking

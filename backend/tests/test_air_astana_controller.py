@@ -5,7 +5,6 @@ from main import app
 
 import pandas as pd
 
-
 handler = AirAstanaHandler()
 client = TestClient(app)
 
@@ -21,9 +20,7 @@ def test_format_booking(formatted_booking):
 
 
 def test_get_bookings_for_stats_admin(order_numbers, report_file):
-    data = order_numbers
-    file = report_file
-    response = client.post("/api/airastana/", data=data, files=file)
+    response = client.post("/api/airastana/", data=order_numbers, files=report_file)
     assert response.status_code == 200
     with open("tests/test_data/air_astana/test_csv_file.csv") as example_file:
         example_file_value = example_file.read()
