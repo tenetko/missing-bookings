@@ -3,6 +3,7 @@ import {Layout, Menu} from 'antd';
 import Icon from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import {ReactComponent as AirAstanaLogo} from "../../logos/AirAstana.svg";
+import {ReactComponent as EskyLogo} from "../../logos/Esky.svg";
 
 const LeftMenu: React.FC = () => {
 
@@ -24,6 +25,12 @@ const LeftMenu: React.FC = () => {
                     <Link to="/airastana">
                         <Icon component={AirAstanaLogo} style={{fontSize: '18px'}}/>
                         <span>Air Astana</span>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="/esky">
+                    <Link to="/esky">
+                        <Icon component={EskyLogo} style={{fontSize: '22px'}}/>
+                        <span>eSky</span>
                     </Link>
                 </Menu.Item>
             </Menu>
