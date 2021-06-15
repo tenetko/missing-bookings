@@ -2,6 +2,9 @@ import React from 'react';
 import { useDispatch } from "react-redux";
 import ProcessXlsxForm from "../../components/ProcessXlsxForm";
 import { setOrderNumbers, processXlsxForm } from "../../store/ProcessXlsxForm/actions";
+import {Space, Typography} from 'antd';
+
+const {Title} = Typography;
 
 const Esky: React.FC = () => {
     const dispatch = useDispatch();
@@ -15,10 +18,13 @@ const Esky: React.FC = () => {
 
     return (
         <>
-            <ProcessXlsxForm
-                callbacks={callbacks}
-                apiEndpoint={apiEndpoint}
-            />
+            <Space size="large" direction="vertical" align="center" style={{width: 700}}>
+                <Title level={2}>eSky</Title>
+                <ProcessXlsxForm
+                    callbacks={callbacks}
+                    apiEndpoint={apiEndpoint}
+                />
+            </Space>
         </>
     )
 };

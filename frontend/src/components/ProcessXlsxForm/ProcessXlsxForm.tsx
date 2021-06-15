@@ -80,8 +80,8 @@ const ProcessXlsxForm: React.FC<Props> = (props) => {
             <Space>
                 <Descriptions title="Как этим пользоваться:" column={1}>
                     <Descriptions.Item>1. Загружаем список order_numbers, которых не хватает в нашей статистике, по одному order_number на строку.</Descriptions.Item>
-                    <Descriptions.Item>2. Загружаем XLSX-отчёт партнёра.</Descriptions.Item>
-                    <Descriptions.Item>3. Нажимаем “Generate a CSV file for stats admin.”</Descriptions.Item>
+                    <Descriptions.Item>2. Нажимаем “Generate a CSV file for stats admin.”</Descriptions.Item>
+                    <Descriptions.Item>3. Загружаем XLSX-отчёт партнёра.</Descriptions.Item>
                     <Descriptions.Item>4. В ответ придёт CSV-файл для stats-admin.</Descriptions.Item>
                 </Descriptions>
             </Space>
