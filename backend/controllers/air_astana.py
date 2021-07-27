@@ -3,7 +3,7 @@ import pandas as pd
 from fastapi import File, Form, UploadFile
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
-from typing import Dict, NamedTuple
+from typing import Dict
 
 from .basic import BasicHandler
 
@@ -20,10 +20,13 @@ class AirAstanaHandler(BasicHandler):
     ) -> Dict:
         workbook = pd.ExcelFile(file.file.read())
         dataframe = pd.read_excel(
-            workbook, self.config["sheet_name"], skiprows=self.config["skip_rows"]
+            workbook,
+            self.config["sheet_name"],
+            engine="openpyxl",
+            skiprows=self.config["skip_rows"],
         )
-        for row in dataframe.itertuples():
-            order_number = str(row.PNR)
+        for _, row in dataframe.iterrows():
+            order_number = str(row["PNR"])
             if order_number in order_numbers:
                 booking = self.format_booking(row)
                 self.add_booking_to_stats_admin_bookings(booking)
@@ -32,17 +35,17 @@ class AirAstanaHandler(BasicHandler):
         file = self.export_to_csv_file()
         return self.return_csv_file(file, filename)
 
-    def format_booking(self, row: NamedTuple) -> Dict:
-        price = float(row[7])
+    def format_booking(self, row: pd.Series) -> Dict:
+        price = float(row["Total Value"])
         profit = price * self.config["profit"]
         booking = {
-            "order_number": str(row.PNR),
-            "marker": row[5],
-            "booked_at": str(row[4]),  # mm-dd-YY in XLSX reports
+            "order_number": str(row["PNR"]),
+            "marker": row["Marker ID"],
+            "booked_at": str(row["Date of issue "]),  # mm-dd-YY in XLSX reports
             "price": price,
-            "price_currency": row.Currency,
+            "price_currency": row["Currency"],
             "profit": profit,
-            "profit_currency": row.Currency,
+            "profit_currency": row["Currency"],
             "state": "paid",
         }
 

@@ -14,7 +14,7 @@ def test_format_booking(formatted_booking):
     dataframe = pd.read_excel(
         workbook, handler.config["sheet_name"], skiprows=handler.config["skip_rows"]
     )
-    row = list(dataframe.itertuples())[0]
+    _, row = list(dataframe.iterrows())[0]
     booking = handler.format_booking(row)
     assert booking == formatted_booking
 
