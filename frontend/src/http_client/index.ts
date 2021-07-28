@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const url = '/api/'
+const url = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : 'http://127.0.0.1:8080/api'
 
 const httpClient = axios.create({
     baseURL: url,
