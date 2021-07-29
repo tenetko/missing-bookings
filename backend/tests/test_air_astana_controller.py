@@ -19,8 +19,8 @@ def test_format_booking(formatted_booking):
     assert booking == formatted_booking
 
 
-def test_get_bookings_for_stats_admin(order_numbers, report_file):
-    response = client.post("/api/airastana/", data=order_numbers, files=report_file)
+def test_get_bookings_for_stats_admin(data, report_file):
+    response = client.post("/api/airastana/", data=data, files=report_file)
     assert response.status_code == 200
     with open("tests/test_data/air_astana/test_csv_file.csv") as example_file:
         example_file_value = example_file.read()
