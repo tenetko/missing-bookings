@@ -16,12 +16,16 @@ class AirAstanaHandler(BasicHandler):
 
     @router.post("/")
     def get_bookings_for_stats_admin(
-        self, order_numbers: str = Form(...), file: UploadFile = File(...)
+        self,
+        order_numbers: str = Form(...),
+        sheet_number: str = Form(...),
+        file: UploadFile = File(...),
     ) -> Dict:
         workbook = pd.ExcelFile(file.file.read())
+        sheet_number = int(sheet_number) - 1
         dataframe = pd.read_excel(
             workbook,
-            self.config["sheet_name"],
+            sheet_name=sheet_number,
             engine="openpyxl",
             skiprows=self.config["skip_rows"],
         )

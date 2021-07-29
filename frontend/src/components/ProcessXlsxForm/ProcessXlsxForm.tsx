@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Descriptions, Divider, Input, message, Space, Upload } from 'antd';
+import { Button, Descriptions, Divider, Input, InputNumber, message, Space, Upload } from 'antd';
 import { RootState } from '../../store/rootReducer';
-import { paramsSetOrderNumbers, paramsProcessXlsxForm } from '../../store/ProcessXlsxForm/types';
+import { paramsSetOrderNumbers, paramsSetSheetNumber, paramsProcessXlsxForm } from '../../store/ProcessXlsxForm/types';
 
 const { TextArea } = Input; 
 
 interface Callbacks {
     setOrderNumbers: (...args: paramsSetOrderNumbers) => void,
+    setSheetNumber: (...args: paramsSetSheetNumber) => void,
     processXlsxForm: (...args: paramsProcessXlsxForm) => void
 }
 
@@ -18,7 +19,7 @@ interface Props {
 
 const ProcessXlsxForm: React.FC<Props> = (props) => {
     const { callbacks, apiEndpoint } = props
-    const { setOrderNumbers, processXlsxForm } = callbacks
+    const { setOrderNumbers, setSheetNumber, processXlsxForm } = callbacks
 
     const orderNumbersHandler = (data: any) => {
         const orderNumbers: string[] = data.target.value
@@ -29,6 +30,12 @@ const ProcessXlsxForm: React.FC<Props> = (props) => {
         setOrderNumbers({ orderNumbers })
     };
 
+    const sheetNumberHandler = (data: any) => {
+        const sheetNumber: string = data;
+
+        setSheetNumber({ sheetNumber })
+    };
+
     const draggerParams  = {
         name: 'file',
         accept: '.xlsx, .xls',
@@ -37,8 +44,13 @@ const ProcessXlsxForm: React.FC<Props> = (props) => {
         customRequest({ file, onError, onProgress, onSuccess }) {
             const formData = new FormData();
 
+            const sheet_number = sheetNumber == null
+                ? 1
+                : sheetNumber.sheetNumber;
+
             if (orderNumbers != null) {
                 formData.append('order_numbers', orderNumbers.orderNumbers);
+                formData.append('sheet_number', sheet_number);
                 formData.append('file', file);
 
                 const clientConfig = {
@@ -56,10 +68,12 @@ const ProcessXlsxForm: React.FC<Props> = (props) => {
     };
 
     const orderNumbers = useSelector((state: RootState): any => state.setOrderNumbers)
+    const sheetNumber = useSelector((state: RootState): any => state.setSheetNumber)
 
     return (
         <>
-            <Space size="large" direction="horizontal" align="center">
+            <Space size="large" direction="horizontal" align="start">
+
                 <Space size="small" direction="vertical" align="center">
                     <div>Order numbers:</div>
                         <TextArea
@@ -70,12 +84,29 @@ const ProcessXlsxForm: React.FC<Props> = (props) => {
                         />
                     
                 </Space>
-                <Upload { ...draggerParams } >
-                        <Button type="primary" size="large">
-                            <p className="ant-upload-text">Generate a CSV file for stats admin</p>
-                        </Button>
-                </Upload>
+
+                <Space size="small" direction="vertical" align="center">
+
+                    <Space size="small" direction="horizontal" align="center">
+                        <div>Sheet number (starting from 1):</div>
+                        <InputNumber
+                            defaultValue = {1}
+                            onChange = { sheetNumberHandler } 
+                    />
+                    </Space>
+
+                    <Space size="small" direction="vertical" align="center">
+                        <Upload { ...draggerParams } >
+                                <Button type="primary" size="large">
+                                    <p className="ant-upload-text">Generate a CSV file for stats-admin</p>
+                                </Button>
+                        </Upload>
+                    </Space>
+
+                </Space>
+
             </Space>
+
             <Divider></Divider>
             <Space>
                 <Descriptions title="Как этим пользоваться:" column={1}>

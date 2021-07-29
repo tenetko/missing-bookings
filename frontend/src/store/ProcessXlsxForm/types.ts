@@ -1,5 +1,7 @@
 export type paramsSetOrderNumbers = Parameters<(orderNumbers: any) => void>;
 
+export type paramsSetSheetNumber = Parameters<(sheetNumber: any) => void>;
+
 export type paramsProcessXlsxForm = Parameters<({ formData }: {
     formData: FormData
     clientConfig: object

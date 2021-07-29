@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import { setOrderNumbersReducer } from "./ProcessXlsxForm/reducers";
+import { setOrderNumbersReducer, setSheetNumberReducer } from "./ProcessXlsxForm/reducers";
 
 const reducers = {
-    setOrderNumbers: setOrderNumbersReducer
+    setOrderNumbers: setOrderNumbersReducer,
+    setSheetNumber: setSheetNumberReducer
 };
 
 const rootReducer = combineReducers(reducers);

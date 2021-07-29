@@ -14,6 +14,18 @@ const setOrderNumbersReducer: Reducer = (state = orderNumbersInitialState, actio
     }
 }
 
+const sheetNumberInitialState = null
+
+const setSheetNumberReducer: Reducer = (state = sheetNumberInitialState, action) => {
+    switch(action.type) {
+        case ActionTypes.SET_SHEET_NUMBER:
+            const sheet_number = action.payload
+            return sheet_number;
+        default:
+            return state;
+    }
+}
+
 const processXlsxFormInitialState = undefined
 
 const processXlsxFormReducer: Reducer = (state = processXlsxFormInitialState, action) => {
@@ -30,4 +42,4 @@ const processXlsxFormReducer: Reducer = (state = processXlsxFormInitialState, ac
     }
 }
 
-export { setOrderNumbersReducer, processXlsxFormReducer }
+export { setOrderNumbersReducer, setSheetNumberReducer, processXlsxFormReducer }
