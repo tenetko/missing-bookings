@@ -1,4 +1,5 @@
 import io
+import pandas as pd
 
 from fastapi import Response
 from json import load
@@ -70,3 +71,17 @@ class BasicHandler:
             booking["price"] = new_price
             booking["profit"] = new_profit
             self.stats_admin_bookings[order_number] = booking
+
+    def get_empty_rows_number(self, workbook: pd.ExcelFile, sheet_number: int) -> int:
+        # The number of empty rows in partner's report is inconsistent.
+        # This method checks first 10 rows in dataframe (including a header row)
+        # and tries to determine how many empty rows should be skipped.
+        dataframe = pd.read_excel(
+            workbook, header=None, sheet_name=sheet_number, engine="openpyxl"
+        )
+        for i in range(3):
+            row_first_item = dataframe.iloc[i][0]
+            if pd.isnull(row_first_item):
+                continue
+            else:
+                return i

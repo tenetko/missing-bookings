@@ -27,7 +27,7 @@ class AirAstanaHandler(BasicHandler):
             workbook,
             sheet_name=sheet_number,
             engine="openpyxl",
-            skiprows=self.config["skip_rows"],
+            skiprows=self.get_empty_rows_number(workbook, sheet_number),
         )
         for _, row in dataframe.iterrows():
             order_number = str(row["PNR"])
