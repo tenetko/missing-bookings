@@ -25,9 +25,11 @@ class EskyHandler(BasicHandler):
 
         for row in dataframe.itertuples():
             order_number = str(row.PackageNumber)
+            currency = row.Currency
             if order_number in order_numbers:
-                booking = self.format_booking(row)
-                self.add_booking_to_stats_admin_bookings(booking)
+                if not pd.isna(currency):
+                    booking = self.format_booking(row)
+                    self.add_booking_to_stats_admin_bookings(booking)
 
         filename = "stats-admin-esky.csv"
         file = self.export_to_csv_file()
@@ -36,6 +38,7 @@ class EskyHandler(BasicHandler):
     def format_booking(self, row: NamedTuple) -> Dict:
         price = float(str(row.BasketValue).replace(",", "."))
         profit = price * self.config["profit"]
+
         booking = {
             "order_number": str(row.PackageNumber),
             "marker": "",
